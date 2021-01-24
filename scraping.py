@@ -135,17 +135,17 @@ def hemisphere_data(browser):
     
     # Add try/except for error handling
     
-    links = browser.find_by_css("a.product-item h3")
+    search_image_url = browser.links.find_by_partial_text("Hemisphere Enhanced")
 
     try:    
 
-        for i in range(len(links)):
+        for item in range(len(search_image_url)):
 
             hemisphere = {}
-            browser.find_by_css("a.product-item h3")[i].click()
-            sample_elem = browser.links.find_by_text('Sample').first
-            hemisphere['image_url'] = sample_elem['href']
-            hemisphere['title'] = browser.find_by_css("h2.title").text
+            browser.links.find_by_partial_text("Hemisphere Enhanced")[item].click()
+            full_image_url = browser.links.find_by_text('Sample')[0]
+            hemisphere['image_url'] = full_image_url['href']
+            hemisphere['title'] = browser.title.split("|")[0].strip()
             hemisphere_image_urls.append(hemisphere)
             browser.back()
     except AttributeError:
